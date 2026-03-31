@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/analyze", async (req, res) => {
+app.post("/api/analyze", async (req, res) => {
   const { resumeText } = req.body;
 
   const prompt = `Analyze this resume and give:
