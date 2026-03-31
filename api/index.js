@@ -6,7 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "*", // Sab origins allow karne ke liye
+  methods: ["POST", "GET", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+}));
 app.use(express.json());
 
 app.post("/api/analyze", async (req, res) => {
@@ -48,8 +52,8 @@ app.post("/api/analyze", async (req, res) => {
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    const PORT = 3000;
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+  const PORT = 3000;
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 }
 
 export default app;
