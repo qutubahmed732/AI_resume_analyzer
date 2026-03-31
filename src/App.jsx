@@ -10,7 +10,7 @@ function App() {
 
   const analyzeWithAI = async (resumeText) => {
     const API_KEY = String(import.meta.env.VITE_GEMINI_API_KEY);
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${API_KEY}`;
 
     const prompt = `Analyze this resume and give: 1. Score/100, 2. Three Strengths, 3. Three Improvements. Text: ${resumeText}`;
 
