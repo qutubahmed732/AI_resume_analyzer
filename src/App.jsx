@@ -9,29 +9,21 @@ function App() {
   const [analysis, setAnalysis] = useState(null);
 
   const analyzeWithAI = async (resumeText) => {
-    const API_KEY = String(import.meta.env.VITE_GEMINI_API_KEY);
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${API_KEY}`;
-
-    const prompt = `Analyze this resume and give: 1. Score/100, 2. Three Strengths, 3. Three Improvements. Text: ${resumeText}`;
-
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
+      const response = await fetch("http://localhost:3000/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ resumeText })
       });
 
       const data = await response.json();
 
-      // 2. Mazeed behtar error handling taake exact pata chale masla kya hai
-      if (response.ok && data.candidates && data.candidates[0]) {
-        return data.candidates[0].content.parts[0].text;
+      if (response.ok) {
+        return data.result;
       } else {
-        console.error("Gemini Error Details:", data);
-        // Agar model not found ho toh dusra model try karein ya message dikhayein
-        return `AI Error: ${data.error?.message || "Model not responding. Please check your API key permissions in Google AI Studio."}`;
+        return data.error || "AI error";
       }
     } catch (error) {
       console.error("Fetch Error:", error);
