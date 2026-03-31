@@ -47,6 +47,9 @@ app.post("/analyze", async (req, res) => {
   }
 });
 
-// app.listen(3000, () => console.log("Server running on port 3000"));  
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = 3000;
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
 
 export default app;
