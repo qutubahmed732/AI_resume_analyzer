@@ -10,7 +10,7 @@ function App() {
 
   const analyzeWithAI = async (resumeText) => {
     try {
-      const response = await fetch("api/analyze", {
+      const response = await fetch("/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
