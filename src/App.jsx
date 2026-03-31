@@ -38,6 +38,7 @@ function App() {
     setLoading(true);
     try {
       const text = await extractTextFromPDF(file);
+      console.log(text);
       const result = await analyzeWithAI(text);
       setAnalysis(result);
     } catch (err) {
