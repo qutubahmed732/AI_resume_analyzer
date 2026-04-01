@@ -37,10 +37,11 @@ app.post("/api/analyze", async (req, res) => {
 
   Text: ${resumeText}`;
 
+  const model = "gemini-3.1-pro-preview";
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-3.1-pro-preview:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -65,5 +66,6 @@ app.post("/api/analyze", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
 
 export default app;
