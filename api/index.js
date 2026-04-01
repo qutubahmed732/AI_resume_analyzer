@@ -2,8 +2,22 @@ import express from "express";
 import cors from "cors";
 // import fetch from "node-fetch";
 import dotenv from "dotenv";
+import path from "path";
+
 
 dotenv.config();
+import { fileURLToPath } from "url";
+
+// Current directory nikalne ke liye (ES Modules mein zaroori hai)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Dotenv ko batayein ke .env file ek level bahar (root mein) hai
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+const API_KEY = String(process.env.GEMINI_API_KEY)
+
+console.log("Checking Key:", process.env.GEMINI_API_KEY ? "Key Found! ✅" : "Key Not Found! ❌");
 
 const app = express();
 app.use(cors({
@@ -23,9 +37,10 @@ app.post("/api/analyze", async (req, res) => {
 
   Text: ${resumeText}`;
 
+
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,10 +65,5 @@ app.post("/api/analyze", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = 3000;
-  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-}
 
 export default app;
