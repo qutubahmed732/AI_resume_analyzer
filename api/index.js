@@ -37,7 +37,7 @@ app.post("/api/analyze", async (req, res) => {
 
   Text: ${resumeText}`;
 
-  const model = "gemini-3.1-pro-preview";
+  const model = "gemini-3-flash-preview";
 
   try {
     const response = await fetch(
